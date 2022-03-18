@@ -3,6 +3,7 @@
 # dependencies
 /bme680-sensor
 /be/node_modules
+/example.json
 
 # production
 /build

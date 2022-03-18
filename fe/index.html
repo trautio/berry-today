@@ -21,22 +21,22 @@
             <div class="Bme-readings">
                 <span class="Data-node">
                     <h2>Current temperature</h2>
-                    <p class="Data-value">value *C</p>
+                    <p id="temperature" class="Data-value"></p>
                 </span>
                 <span class="Data-node">
                     <h2>Current humidity</h2>
-                    <p class="Data-value">value %</p>
+                    <p id="humidity" class="Data-value"></p>
                     <h4>so could mean...</h4>
                 </span>
                 <span class="Data-node">
                     <h2>Current pressure</h2>
-                    <p class="Data-value">value</p>
+                    <p id="pressure" class="Data-value"></p>
                     <h4>so could mean...</h4>
                     <p>value weather</p>
                 </span>
                 <span class="Data-node">
                     <h2>Current gas resistance</h2>
-                    <p class="Data-value">value</p>
+                    <p id="gas" class="Data-value"></p>
                     <h4>so could mean...</h4>
                     <p>value in the air</p>
                 </span>
@@ -59,7 +59,16 @@
             node.classList.add("Plant")
             document.getElementById("plants-id").appendChild(node);
         }
-        // <span class="Timestamp">11-11-2022 10:00</span>
+
+
+        fetch('http://localhost:8080/current')
+            .then(res => res.json())
+            .then(d => {
+                console.log(d.data.temperature);
+                console.log(d.data.pressure);
+                console.log(d.data.humidity);
+                console.log(d.data.gas_resistance);
+            });
     </script>
 
 </body>
