@@ -60,14 +60,13 @@
             document.getElementById("plants-id").appendChild(node);
         }
 
-
         fetch('http://localhost:8080/current')
             .then(res => res.json())
             .then(d => {
-                console.log(d.data.temperature);
-                console.log(d.data.pressure);
-                console.log(d.data.humidity);
-                console.log(d.data.gas_resistance);
+                document.getElementById("temperature").innerText = d.data.temperature.toString();
+                document.getElementById("humidity").innerText = d.data.pressure.toString();
+                document.getElementById("pressure").innerText = d.data.humidity.toString();
+                document.getElementById("gas").innerText = d.data.gas_resistance.toString();
             });
     </script>
 
