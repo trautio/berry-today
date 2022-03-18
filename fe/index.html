@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>berry today</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="App">
+        <header class="App-header">
+            <h1>Berry today</h1>
+            <span>
+                <img src="RPi-Logo-SCREEN.png" class="Rasp-logo" alt="rasp logo" />
+            </span>
+        </header>
+        <div class="App-main">
+            <div class="Bme-readings">
+                <span class="Data-node">
+                    <h2>Current temperature</h2>
+                    <p class="Data-value">value *C</p>
+                </span>
+                <span class="Data-node">
+                    <h2>Current humidity</h2>
+                    <p class="Data-value">value %</p>
+                    <h4>so could mean...</h4>
+                </span>
+                <span class="Data-node">
+                    <h2>Current pressure</h2>
+                    <p class="Data-value">value</p>
+                    <h4>so could mean...</h4>
+                    <p>value weather</p>
+                </span>
+                <span class="Data-node">
+                    <h2>Current gas resistance</h2>
+                    <p class="Data-value">value</p>
+                    <h4>so could mean...</h4>
+                    <p>value in the air</p>
+                </span>
+            </div>
+            <div id="plants-id" class="Plant-gallery"></div>
+        </div>
+        <footer>
+            <p class="App-footer">
+                by trautio &mdash;&nbsp;
+                <i>
+                    wow amazing <a href="https://github.com/trautio">coder</a>
+                </i>
+            </p>
+        </footer>
+    </div>
+    <script>
+        var plants = Array(20);
+        for (let i = 0; i < plants.length; i++) {
+            const node = document.createElement("div");
+            node.classList.add("Plant")
+            document.getElementById("plants-id").appendChild(node);
+        }
+        // <span class="Timestamp">11-11-2022 10:00</span>
+    </script>
+
+</body>
+
+</html>

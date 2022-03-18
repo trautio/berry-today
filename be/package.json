@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bme680-sensor": "^1.0.1",
+    "express": "^4.17.3"
+  }
+}
