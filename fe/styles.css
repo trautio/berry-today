@@ -26,7 +26,7 @@ code {
 
 .App-header h1 {
   margin: 0;
-  font-size: 4em;
+  font-size: 3em;
 }
 
 .App-header h1:first-child {
@@ -55,10 +55,6 @@ code {
   color: yellowgreen;
 }
 
-.Rasp-logo {
-  height: 45px;
-}
-
 /* next up business on the main */
 .App-main {
   position: relative;
@@ -77,15 +73,15 @@ code {
 .Plant-gallery {
   position: relative;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
   grid-template-rows: auto;
-  grid-gap: 4px;
+  grid-gap: 15px;
   flex: 1;
 }
 
 .Plant-gallery > .Plant {
   position: relative;
-  height: 145px;
+  height: 155px;
   background-color: goldenrod;
 }
 
@@ -103,7 +99,7 @@ code {
 .Data-node {
   white-space: normal;
   display: block;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   padding: 0;
 }
 

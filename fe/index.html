@@ -27,26 +27,26 @@
                 <span class="Data-node">
                     <h2>Current humidity</h2>
                     <p class="Data-value">
-                        <span id="humidity"></span>
+                        <span id="humidity">&nbsp;</span>
                         <span>%</span>
                     </p>
-                    <h4 id="humidity-desc"></h4>
+                    <h4 id="humidity-desc">&nbsp;</h4>
                 </span>
                 <span class="Data-node">
                     <h2>Current pressure</h2>
                     <p class="Data-value">
-                        <span id="pressure"></span>
+                        <span id="pressure">&nbsp;</span>
                         <span>hPa</span>
                     </p>
-                    <h4 id="pressure-desc"></h4>
+                    <h4 id="pressure-desc">&nbsp;</h4>
                 </span>
                 <span class="Data-node">
                     <h2>Current gas resistance</h2>
                     <p class="Data-value">
-                        <span id="gas"></span>
+                        <span id="gas">&nbsp;</span>
                         <span>ohm</span>
                     </p>
-                    <h4 id="gas-desc"></h4>
+                    <h4 id="gas-desc">&nbsp;</h4>
                 </span>
             </div>
             <div id="plants-id" class="Plant-gallery"></div>
@@ -61,18 +61,21 @@
         </footer>
     </div>
     <script>
-        var plants = Array(15);
-        for (let i = 0; i < plants.length; i++) {
-            const node = document.createElement("div");
-            node.classList.add("Plant")
-            document.getElementById("plants-id").appendChild(node);
+        var plants = Array(18);
+        var address = "";
+
+        function fetchPics() {
+            fetch(address + "plants")
+                .then(d => {
+                    // server returns  filenames for 15 newest files: show these
+                })
         }
 
         function fetchThings() {
             const currentMonth = new Date().getMonth();
             const isSummer = currentMonth > 4 && currentMonth < 10;
             const isWinter = currentMonth < 5 && currentMonth > 9;
-            fetch('http://localhost:8080/')
+            fetch(address)
                 .then(res => res.json())
                 .then(d => {
                     document.getElementById("temperature").innerText = d.data.temperature.toString();
@@ -98,6 +101,8 @@
                         document.getElementById("pressure-desc").innerText = "The weather should be grey and temperature mild";
                     } else if (d.data.pressure > 1010 && isWinter) {
                         document.getElementById("pressure-desc").innerText = "The weather should be humid and rainy";
+                    } else {
+                        document.getElementById("pressure-desc").innerText = "Normal pressure";
                     }
                 });
         }
@@ -110,9 +115,11 @@
 
         fetchThings();
         showTime();
+        fetchPics();
 
         setInterval(fetchThings, 10000);
         setInterval(showTime, 1000);
+        setInterval(fetchPics, 3600000);
     </script>
 
 </body>
