@@ -5,40 +5,48 @@
     <title>berry today</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="RPi-Logo-SCREEN.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
     <div class="App">
         <header class="App-header">
-            <h1>Berry today</h1>
-            <span>
-                <img src="RPi-Logo-SCREEN.png" class="Rasp-logo" alt="rasp logo" />
-            </span>
+            <h1 id="date"></h1>
+            <h1 id="time"></h1>
         </header>
         <div class="App-main">
             <div class="Bme-readings">
                 <span class="Data-node">
                     <h2>Current temperature</h2>
-                    <p id="temperature" class="Data-value"></p>
+                    <p class="Data-value">
+                        <span id="temperature"></span>
+                        <span>&#8451;</span>
+                    </p>
                 </span>
                 <span class="Data-node">
                     <h2>Current humidity</h2>
-                    <p id="humidity" class="Data-value"></p>
-                    <h4>so could mean...</h4>
+                    <p class="Data-value">
+                        <span id="humidity"></span>
+                        <span>%</span>
+                    </p>
+                    <h4 id="humidity-desc"></h4>
                 </span>
                 <span class="Data-node">
                     <h2>Current pressure</h2>
-                    <p id="pressure" class="Data-value"></p>
-                    <h4>so could mean...</h4>
-                    <p>value weather</p>
+                    <p class="Data-value">
+                        <span id="pressure"></span>
+                        <span>hPa</span>
+                    </p>
+                    <h4 id="pressure-desc"></h4>
                 </span>
                 <span class="Data-node">
                     <h2>Current gas resistance</h2>
-                    <p id="gas" class="Data-value"></p>
-                    <h4>so could mean...</h4>
-                    <p>value in the air</p>
+                    <p class="Data-value">
+                        <span id="gas"></span>
+                        <span>ohm</span>
+                    </p>
+                    <h4 id="gas-desc"></h4>
                 </span>
             </div>
             <div id="plants-id" class="Plant-gallery"></div>
@@ -53,21 +61,58 @@
         </footer>
     </div>
     <script>
-        var plants = Array(20);
+        var plants = Array(15);
         for (let i = 0; i < plants.length; i++) {
             const node = document.createElement("div");
             node.classList.add("Plant")
             document.getElementById("plants-id").appendChild(node);
         }
 
-        fetch('http://localhost:8080/current')
-            .then(res => res.json())
-            .then(d => {
-                document.getElementById("temperature").innerText = d.data.temperature.toString();
-                document.getElementById("humidity").innerText = d.data.pressure.toString();
-                document.getElementById("pressure").innerText = d.data.humidity.toString();
-                document.getElementById("gas").innerText = d.data.gas_resistance.toString();
-            });
+        function fetchThings() {
+            const currentMonth = new Date().getMonth();
+            const isSummer = currentMonth > 4 && currentMonth < 10;
+            const isWinter = currentMonth < 5 && currentMonth > 9;
+            fetch('http://localhost:8080/')
+                .then(res => res.json())
+                .then(d => {
+                    document.getElementById("temperature").innerText = d.data.temperature.toString();
+                    document.getElementById("humidity").innerText = d.data.humidity.toString();
+                    document.getElementById("pressure").innerText = d.data.pressure.toString();
+                    document.getElementById("gas").innerText = d.data.gas_resistance.toString();
+
+                    if (d.data.humidity < 20) {
+                        document.getElementById("humidity-desc").innerText = "VERY DRY! USE THE HUMIDIFIER! :O";
+                    } else if (d.data.humidity < 40) {
+                        document.getElementById("humidity-desc").innerText = "Pretty normal for winter time, otherwise dry :(";
+                    } else if (d.data.humidity > 40) {
+                        document.getElementById("humidity-desc").innerText = "Pretty normal for summer time, otherwise wet :(";
+                    } else if (d.data.humidity > 70) {
+                        document.getElementById("humidity-desc").innerText = "Amazon rain forest wetness huh what how?!";
+                    }
+
+                    if (d.data.pressure > 1030 && isWinter) {
+                        document.getElementById("pressure-desc").innerText = "The weather should be nice";
+                    } else if (d.data.pressure > 1030 && isWinter) {
+                        document.getElementById("pressure-desc").innerText = "The weather should be nice but might get thunder!";
+                    } else if (d.data.pressure > 1010 && isWinter) {
+                        document.getElementById("pressure-desc").innerText = "The weather should be grey and temperature mild";
+                    } else if (d.data.pressure > 1010 && isWinter) {
+                        document.getElementById("pressure-desc").innerText = "The weather should be humid and rainy";
+                    }
+                });
+        }
+
+        function showTime() {
+            const d = new Date();
+            document.getElementById("date").innerText = d.toLocaleDateString("fi-FI");
+            document.getElementById("time").innerText = d.toLocaleTimeString("fi-FI");
+        }
+
+        fetchThings();
+        showTime();
+
+        setInterval(fetchThings, 10000);
+        setInterval(showTime, 1000);
     </script>
 
 </body>
